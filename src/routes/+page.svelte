@@ -23,7 +23,7 @@
 
 <section class="dark:bg-primary min-h-screen flex items-center justify-center">
 	<div class="dark:bg-secondary flex items-center justify-center rounded-2xl shadow-2xl">
-		<div class="flex flex-start items-start justify-center flex-col py-8 px-2">
+		<div class="flex flex-start items-start justify-center flex-col py-8 px-4">
 			<span class="font-bold text-4xl dark:text-slate-100">Login</span>
 			<form class="flex flex-col gap-4 mt-5">
 				<input
