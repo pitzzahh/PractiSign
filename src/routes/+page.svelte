@@ -23,7 +23,7 @@
 
 <section class="dark:bg-primary min-h-screen flex items-center justify-center">
 	<div class="dark:bg-secondary flex items-center justify-center rounded-2xl shadow-2xl">
-		<div class="flex flex-start items-start justify-center flex-col py-8 px-4">
+		<div class="flex flex-start items-start justify-center flex-col py-8 px-2">
 			<span class="font-bold text-4xl dark:text-slate-100">Login</span>
 			<form class="flex flex-col gap-4 mt-5">
 				<input
@@ -45,7 +45,7 @@
 					on:click={handleLogin}
 					isClicked={buttonInfo.isClicked}
 					styles="text-slate-100 bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-300 font-medium rounded-lg text-md px-5 py-2.5 
-                w-96 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+             w-72 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
 				/>
 
 				<div class="flex items-center justify-center gap-2">
