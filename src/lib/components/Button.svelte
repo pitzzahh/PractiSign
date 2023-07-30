@@ -1,13 +1,13 @@
 <script lang="ts">
-	export let isClicked: boolean = false;
+	export let showLoading: boolean = false;
 	export let styles: string;
 	export let info: string;
-	$: disabled = isClicked;
+	$: disabled = showLoading;
 </script>
 
 <button type="button" on:click {disabled} class={styles}>
 	<section class="flex items-center justify-center gap-2 w-auto">
-		{#if isClicked}
+		{#if showLoading}
 			<div role="status">
 				<svg
 					aria-hidden="true"
