@@ -1,9 +1,7 @@
-import { redirect } from "@sveltejs/kit";
-import { onMount } from "svelte";
-
+import { redirect } from '@sveltejs/kit';
 // TODO: check if logged in, if not redirect to login else redirect to dashboard
 // Temporary stuff, still learning sveltekit
 
-onMount(() => {
-    throw redirect(307, '/login');
-});
+export function load() {
+	throw redirect(302, '/login');
+}
