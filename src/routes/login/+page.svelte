@@ -30,29 +30,33 @@
 <section class="dark:bg-primary min-h-screen flex items-center justify-center">
 	<div
 		in:scale
-		class="dark:bg-secondary flex items-center justify-center rounded-2xl shadow-2xl p-10 gap-4"
+		class="dark:bg-secondary flex items-center justify-center rounded-2xl shadow-2xl px-10 py-7 md:px-10 md:py-5 gap-4"
 	>
 		<div class="flex flex-start items-start justify-center w-full flex-col">
 			<span class="font-bold text-4xl dark:text-slate-100">Welcome back</span>
 			<span class="font-bold text-md dark:text-slate-100">Login to continue</span>
 			<form class="flex flex-col gap-4 mt-10 w-full">
-				<label for="username" class="sr-only">Username</label>
-				<p class="dark:text-slate-100 text-md">Username</p>
-				<input
-					type="text"
-					use:init
-					class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block p-2.5 bg-transparent dark:border-gray-600 dark:placeholder-gray-400 dark:text-slate-100 dark:focus:ring-blue-500 dark:focus:border-priamry"
-					placeholder="username"
-					name="username"
-				/>
-				<label for="password" class="sr-only">Password</label>
-				<p class="dark:text-slate-100 text-md">Password</p>
-				<input
-					type="password"
-					class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-priamry focus:border-priamry block w-full p-2.5 bg-transparent dark:border-gray-600 dark:placeholder-gray-400 dark:text-slate-100 dark:focus:ring-priamry dark:focus:border-priamry"
-					placeholder="password"
-					name="password"
-				/>
+				<div>
+					<label for="username" class="sr-only">Username</label>
+					<p class="dark:text-slate-100 text-md mb-1">Username</p>
+					<input
+						type="text"
+						use:init
+						class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block p-2.5 bg-transparent dark:border-gray-600 w-full dark:placeholder-gray-400 dark:text-slate-100 dark:focus:ring-blue-500 dark:focus:border-priamry"
+						placeholder="username"
+						name="username"
+					/>
+				</div>
+				<div>
+					<label for="password" class="sr-only">Password</label>
+					<p class="dark:text-slate-100 text-md mb-1">Password</p>
+					<input
+						type="password"
+						class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-priamry focus:border-priamry block p-2.5 bg-transparent dark:border-gray-600 w-full dark:placeholder-gray-400 dark:text-slate-100 dark:focus:ring-priamry dark:focus:border-priamry"
+						placeholder="password"
+						name="password"
+					/>
+				</div>
 				<Button
 					info={buttonInfo.info}
 					on:click={handleLogin}
