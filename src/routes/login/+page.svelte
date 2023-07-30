@@ -1,5 +1,8 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
+    
+    import loginBanner from '$lib/assets/login/login-md-banner-1.jpg';
+
 	import { redirect } from '@sveltejs/kit';
 	import { scale } from 'svelte/transition';
 	// TODO: add check if logged in, if not redirect to login else redirect to dashboard
@@ -34,22 +37,22 @@
 	>
 		<div class="flex flex-start items-start justify-center w-full flex-col">
 			<span class="font-bold text-4xl dark:text-slate-100">Welcome back</span>
-			<span class="font-bold text-md dark:text-slate-100">Login to continue</span>
+			<span class="font-bold text-xl dark:text-slate-100">Login to continue</span>
 			<form class="flex flex-col gap-4 mt-10 w-full">
 				<div>
-					<label for="username" class="sr-only">Username</label>
-					<p class="dark:text-slate-100 text-md mb-1">Username</p>
+					<label for="email" class="sr-only">Email</label>
+					<p class="dark:text-slate-100 text-md font-bold mb-1">Email</p>
 					<input
 						type="text"
 						use:init
 						class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block p-2.5 bg-transparent dark:border-gray-600 w-full dark:placeholder-gray-400 dark:text-slate-100 dark:focus:ring-blue-500 dark:focus:border-priamry"
-						placeholder="username"
-						name="username"
+						placeholder="email"
+						name="email"
 					/>
 				</div>
 				<div>
 					<label for="password" class="sr-only">Password</label>
-					<p class="dark:text-slate-100 text-md mb-1">Password</p>
+					<p class="dark:text-slate-100 text-md font-bold mb-1">Password</p>
 					<input
 						type="password"
 						class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-priamry focus:border-priamry block p-2.5 bg-transparent dark:border-gray-600 w-full dark:placeholder-gray-400 dark:text-slate-100 dark:focus:ring-priamry dark:focus:border-priamry"
@@ -124,7 +127,7 @@
 		<div class="hidden md:block">
 			<img
 				class="rounded-2xl w-[40rem]"
-				src="https://images.unsplash.com/photo-1690571653404-f6095cf3d596?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&dl=emanuel-haas-0zPkdQyaxAY-unsplash.jpg"
+				src="{loginBanner}"
 				alt="Left side graphic"
 			/>
 		</div>
