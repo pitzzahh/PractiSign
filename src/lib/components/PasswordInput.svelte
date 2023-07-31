@@ -2,7 +2,7 @@
 	import eye from '$lib/assets/auth/eye.svg';
 	import eyeClosed from '$lib/assets/auth/eye-closed.svg';
 	export let togglePassword: boolean;
-    export let content: string;
+    export let content: string = '';
 
 	$: inputType = togglePassword ? 'text' : 'password';
 </script>
