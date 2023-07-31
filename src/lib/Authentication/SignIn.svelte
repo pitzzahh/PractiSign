@@ -1,10 +1,13 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
+	import PasswordInput from '$lib/components/PasswordInput.svelte';
 	import SignInOptions from './SignInOptions.svelte';
-	import signinBanner from '$lib/assets/login/signin-md-banner-1.jpg';
+	import signinBanner from '$lib/assets/auth/signin-md-banner-1.jpg';
 	import { scale } from 'svelte/transition';
 	import { enhance } from '$app/forms';
-	import { goto } from '$app/navigation';
+
+	let togglePassword: boolean;
+	let passwordContent: string;
 
 	const buttonInfo = {
 		isSigningIn: false,
@@ -23,6 +26,8 @@
 	function init(el: HTMLInputElement): any {
 		el.focus();
 	}
+
+	$: showingPassword = togglePassword;
 </script>
 
 <section class="dark:bg-primary min-h-screen flex items-center justify-center">
@@ -38,22 +43,17 @@
 					<label for="email" class="sr-only">Email</label>
 					<p class="dark:text-slate-100 text-md font-bold mb-1">Email</p>
 					<input
+						required
 						type="text"
 						use:init
 						class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block p-2.5 bg-transparent dark:border-gray-600 w-full dark:placeholder-gray-400 dark:text-slate-100 dark:focus:ring-blue-500 dark:focus:border-priamry"
-						placeholder="Email"
 						name="email"
 					/>
 				</div>
 				<div>
 					<label for="password" class="sr-only">Password</label>
 					<p class="dark:text-slate-100 text-md font-bold mb-1">Password</p>
-					<input
-						type="password"
-						class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-priamry focus:border-priamry block p-2.5 bg-transparent dark:border-gray-600 w-full dark:placeholder-gray-400 dark:text-slate-100 dark:focus:ring-priamry dark:focus:border-priamry"
-						placeholder="Email"
-						name="password"
-					/>
+					<PasswordInput {togglePassword} content={passwordContent}  on:click={() => (togglePassword = !togglePassword)} />
 				</div>
 				<Button
 					info={buttonInfo.info}
@@ -62,17 +62,17 @@
 					styles="text-slate-100 bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-300 font-medium rounded-lg text-md px-5 py-2.5 
               dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
 				/>
-
 				<SignInOptions />
 				<hr class="h-[1px] dark:bg-[#24292F]" />
 				<div class="flex items-center justify-center gap-3">
 					<p class="dark:text-slate-100">Don't have an account?</p>
-					<button
-						on:click={() => goto('/signup')}
-						class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-					>
-						SignUp
-					</button>
+					<a href="/signup">
+						<Button
+							info="SignUp"
+							showLoading={false}
+							styles="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+						/>
+					</a>
 				</div>
 			</form>
 		</div>
