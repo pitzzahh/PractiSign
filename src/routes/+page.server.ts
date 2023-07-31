@@ -4,5 +4,5 @@ import { redirect } from '@sveltejs/kit';
 // Temporary stuff, still learning sveltekit
 
 export function load() {
-	throw redirect(302, '/signin');
+	throw redirect(307, '/signin');
 }
