@@ -23,12 +23,23 @@
 		}, 2000);
 	};
 
-	function init(el: HTMLInputElement): any {
+	function init(el: HTMLInputElement): void {
 		el.focus();
 	}
 
 	$: showingPassword = togglePassword;
 </script>
+
+<svelte:head>
+	<title>Sign in</title>
+	<meta
+		name="description"
+		content="Sign in form"
+	/>
+	<meta name="author" content="Peter John Arao" />
+	<meta name="og:title" content="Sign in" />
+	<meta property="og:site_name" content="PractiSign" />
+</svelte:head>
 
 <section class="dark:bg-primary min-h-screen flex items-center justify-center">
 	<div

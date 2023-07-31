@@ -27,6 +27,17 @@
 	$: showingPassword = togglePassword;
 </script>
 
+<svelte:head>
+	<title>Sign up</title>
+	<meta
+		name="description"
+		content="Sign up form"
+	/>
+	<meta name="author" content="Peter John Arao" />
+	<meta name="og:title" content="Sign up" />
+	<meta property="og:site_name" content="PractiSign" />
+</svelte:head>
+
 <section class="dark:bg-primary min-h-screen flex items-center justify-center">
 	<div
 		in:scale
