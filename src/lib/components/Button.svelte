@@ -6,7 +6,7 @@
 </script>
 
 <button type="button" on:click {disabled} class={styles}>
-	<section class="flex items-center justify-center gap-2 w-auto">
+	<section class="flex items-center justify-center gap-2 w-auto {disabled ? 'cursor-not-allowed' : ''}">
 		{#if showLoading}
 			<div role="status">
 				<svg
