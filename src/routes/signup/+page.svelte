@@ -1,5 +1,5 @@
 <script>
-    import SignUp from "$lib/Authentication/SignUp.svelte";
+    import SignUp from "$lib/auth/SignUp.svelte";
 </script>
 
 <SignUp/>
