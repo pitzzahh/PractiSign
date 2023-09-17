@@ -1,19 +1,9 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { auth, authUser } from '$lib';
+	import { auth, user } from '$lib';
+	import Hr from '$lib/components/HorizontalLine.svelte';
 	import type { FirebaseError } from 'firebase/app';
 	import { signOut } from 'firebase/auth';
-
-	function handleSignOut(_event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement }) {
-		signOut(auth)
-			.then(() => {
-				$authUser = undefined;
-				goto('/signin');
-			})
-			.catch((error: FirebaseError) => {
-				console.log(error);
-			});
-	}
 </script>
 
 <svelte:head>
@@ -54,5 +44,25 @@
 	<meta name="twitter:image" content="https://practi-sign.vercel.app/favicon.png" />
 </svelte:head>
 
-<h1>Hello welcome {auth.currentUser?.displayName}</h1>
-<button on:click={handleSignOut}>SignOut</button>
+<main class="bg-blue-500 h-screen flex justify-center items-center">
+	<div class="text-white text-center">
+		<p class="text-6xl font-bold mb-4">Hello World!</p>
+		<p class="text-4xl">Discover amazing content and more!</p>
+		<p class="text-2xl">welcome {auth.currentUser?.displayName}</p>
+		<Hr content="options" />
+		<button
+			class="bg-danger-900 text-white py-2 px-4 rounded-md hover:bg-danger-500"
+			on:click={() => {
+				signOut(auth)
+					.then(() => {
+						goto('/signin');
+					})
+					.catch((error) => {
+						console.log(error);
+					});
+			}}
+		>
+			Sign Out
+		</button>
+	</div>
+</main>
