@@ -1,12 +1,21 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
-	import PasswordInput from '$lib/components/PasswordInput.svelte';
 	import signinBanner from '$lib/assets/auth/signin-md-banner-1.jpg';
 	import { scale } from 'svelte/transition';
 	import { enhance } from '$app/forms';
+	import { createUserWithEmailAndPassword, type UserCredential } from 'firebase/auth';
+	import { auth, authUser, store } from '$lib';
+
+	import Input from '$lib/components/Input.svelte';
+	import { goto } from '$app/navigation';
+	import type { FirebaseError } from 'firebase/app';
+	import OrDivider from '$lib/components/OrDivider.svelte';
+
 	let togglePassword: boolean;
+
+	let email: string;
 	let passwordContent: string;
-	
+
 	const buttonInfo = {
 		isSigninUp: true,
 		showLoading: false,
@@ -17,21 +26,28 @@
 		buttonInfo.isSigninUp = true;
 		buttonInfo.showLoading = true;
 		buttonInfo.info = 'Signing up';
-		setTimeout(() => {
-			buttonInfo.isSigninUp = false;
-			buttonInfo.showLoading = false;
-			buttonInfo.info = 'SignUp';
-		}, 2000);
+		createUserWithEmailAndPassword(auth, email, passwordContent)
+			.then((userCredential: UserCredential) => {
+				$authUser = {
+					uid: userCredential.user.uid,
+					email: userCredential.user.email || ''
+				};
+				goto('/');
+			})
+			.catch((error: FirebaseError) => {
+				console.log(error);
+			})
+			.finally(() => {
+				buttonInfo.isSigninUp = false;
+				buttonInfo.showLoading = false;
+				buttonInfo.info = 'Signup';
+			});
 	};
-
 </script>
 
 <svelte:head>
 	<title>Sign up</title>
-	<meta
-		name="description"
-		content="Sign up form"
-	/>
+	<meta name="description" content="Sign up form" />
 	<meta name="author" content="Peter John Arao" />
 	<meta name="og:title" content="Sign up" />
 	<meta property="og:site_name" content="PractiSign" />
@@ -46,31 +62,25 @@
 			<span class="font-bold text-4xl dark:text-slate-100">Nice to meet you</span>
 			<span class="font-bold text-xl dark:text-slate-100">Sign up to continue with our service</span
 			>
-			<form class="flex flex-col gap-4 mt-10 w-full" use:enhance>
+			<form method="POST" class="flex flex-col gap-4 mt-10 w-full" use:enhance>
 				<div>
 					<label for="text" class="sr-only">Name</label>
 					<p class="dark:text-slate-100 text-md font-bold mb-1">Name</p>
-					<input
-						required
-						type="text"
-						class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block p-2.5 bg-transparent dark:border-gray-600 w-full dark:placeholder-gray-400 dark:text-slate-100 dark:focus:primary dark:focus:border-priamry"
-						name="text"
-					/>
+					<Input content={email} name={'name'} hasIcon={false} />
 				</div>
 				<div>
 					<label for="email" class="sr-only">Email</label>
 					<p class="dark:text-slate-100 text-md font-bold mb-1">Email</p>
-					<input
-						required
-						type="text"
-						class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary focus:border-primary block p-2.5 bg-transparent dark:border-gray-600 w-full dark:placeholder-gray-400 dark:text-slate-100 dark:focus:primary dark:focus:border-priamry"
-						name="email"
-					/>
+					<Input content={email} name={'email'} hasIcon={false} />
 				</div>
 				<div>
 					<label for="password" class="sr-only">Password</label>
 					<p class="dark:text-slate-100 text-md font-bold mb-1">Password</p>
-					<PasswordInput {togglePassword} content={passwordContent} on:click={() => (togglePassword = !togglePassword)} />
+					<Input
+						content={passwordContent}
+						name={'password'}
+						hasIcon={true}
+					/>
 				</div>
 				<Button
 					info={buttonInfo.info}
