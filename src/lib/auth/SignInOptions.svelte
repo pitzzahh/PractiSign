@@ -15,14 +15,14 @@
 		$store.isSigninIn = false;
 	}
 
-	function signInWithGoogle() {
+	async function signInWithGoogle() {
 		$store.isSigninIn = true;
 		console.log('signin in with google');
 		const provider = new GoogleAuthProvider();
 		signInWithPopup(auth, provider)
 			.then((user: UserCredential) => {
 				console.info('signed in with boogle');
-				if(user) {
+				if (user) {
 					goto('/');
 				}
 			})
@@ -37,7 +37,7 @@
 	const signInOptions = [
 		{
 			styles:
-				'text-slate-100 bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-2 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex items-center justify-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30',
+				'text-slate-100 bg-[#24292F] hover:bg-[#24292F]/90 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center flex items-center justify-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30',
 			info: 'Sign in with Github',
 			icon: githubIcon,
 			alt: 'GitHub icon',
@@ -45,7 +45,7 @@
 		},
 		{
 			styles:
-				'text-slate-100 bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-2 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex items-center justify-center dark:focus:ring-[#4285F4]/55',
+				'text-slate-100 bg-[#4285F4] hover:bg-[#4285F4]/90 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center flex items-center justify-center ',
 			info: 'Sign in with Google',
 			icon: googleIcon,
 			alt: 'Google icon',
@@ -58,7 +58,7 @@
 <Hr content="or" />
 
 {#each signInOptions as option}
-	<Button on:click={option.handler}  styles={option.styles}>
+	<Button on:click={option.handler} styles={option.styles}>
 		<img src={option.icon} width="20" height="20" alt={option.alt} />
 		{option.info}
 	</Button>

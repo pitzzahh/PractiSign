@@ -29,7 +29,6 @@
 		$store.isSigninIn = true;
 		signInWithEmailAndPassword(auth, email, passwordContent)
 			.then((result: UserCredential) => {
-				const token = GoogleAuthProvider.credentialFromResult(result)?.accessToken;
 				if (result.user) {
 					goto('/');
 				}
@@ -63,11 +62,11 @@
 		<div class="flex flex-start items-start justify-center w-full flex-col">
 			<span class="font-bold text-4xl dark:text-slate-100">Welcome back</span>
 			<span class="font-bold text-xl dark:text-slate-100">Sign in to continue</span>
-			<form method="post" class="flex flex-col gap-4 mt-10 w-full" use:enhance>
+			<form method="POST" class="flex flex-col gap-4 mt-10 w-full" use:enhance>
 				<div>
 					<label for="email" class="sr-only">Email</label>
 					<p class="dark:text-slate-100 text-md font-bold mb-1">Email</p>
-					<Input on:keydown={() => (errorMessage = '')} value={email} hasIcon={false} />
+					<Input on:keydown={() => (errorMessage = '')} bind:value={email} hasIcon={false} />
 				</div>
 				<div>
 					<label for="password" class="sr-only">Password</label>
@@ -79,7 +78,7 @@
 							}
 							errorMessage = '';
 						}}
-						value={passwordContent}
+						bind:value={passwordContent}
 						hasIcon={true}
 					/>
 				</div>
@@ -98,12 +97,12 @@
 
 				<div class="flex items-center justify-center gap-3">
 					<p class="dark:text-slate-100">Don't have an account?</p>
-					<a
-						href="/signup"
-						class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+					<Button
+						on:click={() => goto('/signup')}
+						styles="focus:outline-none text-white bg-green-700 hover:bg-green-800  font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700"
 					>
 						SignUp
-					</a>
+					</Button>
 				</div>
 			</form>
 		</div>

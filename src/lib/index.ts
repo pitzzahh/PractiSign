@@ -1,6 +1,5 @@
-import { redirect } from '@sveltejs/kit';
 import { initializeApp } from 'firebase/app';
-import { getAuth, onAuthStateChanged, type User } from 'firebase/auth';
+import { getAuth, type User } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import { writable } from 'svelte/store';
@@ -29,14 +28,15 @@ export const store = writable({
 function userStore() {
   let unsubscribe: () => void;
 
-  if (!auth || !globalThis.window) {
-    console.warn('Auth is not initialized or not in the browser!')
-    const { subscribe } = writable<User | null>(null)
-    return { subscribe }
-  }
+  // if (!auth || !globalThis.window) {
+  //   console.warn('Auth is not initialized or not in the browser!')
+  //   const { subscribe } = writable<User | null>(null)
+  //   return { subscribe }
+  // }
 
-  const { subscribe } = writable(auth?.currentUser ?? null, (set) => {
-    unsubscribe = onAuthStateChanged(auth, (user) => {
+  const { subscribe } = writable<User | null>(auth?.currentUser ?? null, (set) => {
+    unsubscribe = auth.onAuthStateChanged((user) => {
+      console.info('a new user has been set')
       set(user)
     })
 

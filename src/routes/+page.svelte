@@ -2,7 +2,6 @@
 	import { goto } from '$app/navigation';
 	import { auth, user } from '$lib';
 	import Hr from '$lib/components/HorizontalLine.svelte';
-	import type { FirebaseError } from 'firebase/app';
 	import { signOut } from 'firebase/auth';
 </script>
 
@@ -46,9 +45,8 @@
 
 <main class="bg-blue-500 h-screen flex justify-center items-center">
 	<div class="text-white text-center">
-		<p class="text-6xl font-bold mb-4">Hello World!</p>
+		<p class="text-6xl font-bold mb-4">Welcome {auth.currentUser?.displayName}</p>
 		<p class="text-4xl">Discover amazing content and more!</p>
-		<p class="text-2xl">welcome {auth.currentUser?.displayName}</p>
 		<Hr content="options" />
 		<button
 			class="bg-danger-900 text-white py-2 px-4 rounded-md hover:bg-danger-500"
