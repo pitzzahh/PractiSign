@@ -1,8 +1,9 @@
 <script lang="ts">
+	import { store } from "$lib";
 	export let showLoading: boolean = false;
 	export let styles: string;
 	export let info: string;
-	$: disabled = showLoading;
+	$: disabled = showLoading || $store.isSigninIn;
 </script>
 
 <button type="button" on:click {disabled} class={styles}>
