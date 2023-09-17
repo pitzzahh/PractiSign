@@ -1,14 +1,15 @@
 <script lang="ts">
-	import { store } from "$lib";
-	export let showLoading: boolean = false;
+	import { store } from '$lib';
 	export let styles: string;
-	export let info: string;
-	$: disabled = showLoading || $store.isSigninIn;
+	export let info: string = '';
+	$: disabled = $store.isSigninIn || $store.isSigninIn;
 </script>
 
-<button type="button" on:click {disabled} class={styles}>
-	<section class="flex items-center justify-center gap-2 w-auto {disabled ? 'cursor-not-allowed' : ''}">
-		{#if showLoading}
+<button type="button" on:click|preventDefault {disabled} class={styles}>
+	<section
+		class="flex items-center justify-center gap-1.5 w-auto {disabled ? 'cursor-not-allowed' : ''}"
+	>
+		{#if $store.isSigninIn}
 			<div role="status">
 				<svg
 					aria-hidden="true"
@@ -27,6 +28,10 @@
 				<span class="sr-only">Loading...</span>
 			</div>
 		{/if}
-		<p>{info}</p>
+		{#if info}
+			<p>{info}</p>
+		{:else}
+			<slot />
+		{/if}
 	</section>
 </button>
