@@ -1,5 +1,11 @@
-type User = { 
-	email: string;
-	password: string;
-	name: string;
+type User = {
+	email: string?;
+	name: string?;
+	photoUrl: string?;
 };
+
+interface AuthUser {
+	uid: string;
+	email: string;
+}
+
