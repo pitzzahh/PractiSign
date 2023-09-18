@@ -1,8 +1,8 @@
-<script lang="ts">
-	import { goto } from '$app/navigation';
-	import { auth, user } from '$lib';
+<script>
+	import { auth } from '$lib';
 	import Hr from '$lib/components/HorizontalLine.svelte';
 	import { signOut } from 'firebase/auth';
+	import { fade } from 'svelte/transition';
 </script>
 
 <svelte:head>
@@ -43,22 +43,17 @@
 	<meta name="twitter:image" content="https://practi-sign.vercel.app/favicon.png" />
 </svelte:head>
 
-<main class="bg-blue-500 h-screen flex justify-center items-center">
+<main in:fade class="bg-blue-500 h-screen flex justify-center items-center">
 	<div class="text-white text-center">
 		<p class="text-6xl font-bold mb-4">Welcome {auth.currentUser?.displayName}</p>
 		<p class="text-4xl">Discover amazing content and more!</p>
 		<Hr content="options" />
 		<button
 			class="bg-danger-900 text-white py-2 px-4 rounded-md hover:bg-danger-500"
-			on:click={() => {
+			on:click={() =>
 				signOut(auth)
-					.then(() => {
-						goto('/signin');
-					})
-					.catch((error) => {
-						console.log(error);
-					});
-			}}
+					.then(() => location.reload())
+					.catch((error) => console.error(error))}
 		>
 			Sign Out
 		</button>
