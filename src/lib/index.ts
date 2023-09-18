@@ -21,14 +21,14 @@ export const storage = getStorage(app);
 
 export const store = writable({
   loggedIn: false,
-  isSigninIn: false,
+  isAuthenticating: false,
   showPassword: false
 });
 
 function userStore() {
   let unsubscribe: (() => void) | null = null; 
 
-  const store = writable<User | null>(null, (set) => {
+  const store = writable<User | null>(auth.currentUser, (set) => {
     unsubscribe = auth.onAuthStateChanged((user) => set(user));
   });
 
@@ -36,7 +36,6 @@ function userStore() {
     return () => {
       if (unsubscribe) {
         unsubscribe();
-        unsubscribe = null;
       }
     };
   });
