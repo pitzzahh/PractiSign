@@ -2,9 +2,16 @@
 	import Hr from '../components/HorizontalLine.svelte';
 	import githubIcon from '$lib/assets/auth/github-icon.svg';
 	import googleIcon from '$lib/assets/auth/google-icon.svg';
+	import facebookIcon from '$lib/assets/auth/facebook-icon.svg';
 	import { goto } from '$app/navigation';
 	import { store, auth } from '$lib';
-	import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup, type UserCredential } from 'firebase/auth';
+	import {
+		FacebookAuthProvider,
+		GithubAuthProvider,
+		GoogleAuthProvider,
+		signInWithPopup,
+		type UserCredential
+	} from 'firebase/auth';
 	import { onDestroy } from 'svelte';
 	import Button from '$lib/components/Button.svelte';
 	import type { FirebaseError } from 'firebase/app';
@@ -17,7 +24,7 @@
 
 	async function signin(provider: any) {
 		$store.isAuthenticating = true;
-		console.log(`Signing in using ${provider}`)
+		console.log(`Signing in using ${provider}`);
 		signInWithPopup(auth, provider)
 			.then((user: UserCredential) => {
 				console.info(`signed in with ${provider}`);
@@ -36,19 +43,30 @@
 	const signInOptions = [
 		{
 			styles:
-				'text-slate-100 bg-[#24292F] hover:bg-[#24292F]/90 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center flex items-center justify-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30',
+				'text-slate-100 bg-[#24292F] hover:bg-[#24292F]/90 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center flex items-center justify-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 hover:scale-[1.03]',
 			info: 'Sign in with Github',
 			icon: githubIcon,
 			alt: 'GitHub icon',
+			disabled: false,
 			provider: new GithubAuthProvider()
-			},
+		},
 		{
 			styles:
-				'text-slate-100 bg-[#4285F4] hover:bg-[#4285F4]/90 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center flex items-center justify-center ',
+				'text-slate-100 bg-[#4285F4] hover:bg-[#4285F4]/90 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center flex items-center justify-center hover:scale-[1.03]',
 			info: 'Sign in with Google',
 			icon: googleIcon,
 			alt: 'Google icon',
+			disabled: false,
 			provider: new GoogleAuthProvider()
+		},
+		{
+			styles:
+				'text-slate-100 bg-[#1877F2] hover:bg-[#1877F2]/90 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center flex items-center justify-center hover:scale-[1.03]',
+			info: 'Sign in with Facebook',
+			icon: facebookIcon,
+			alt: 'Facebook icon',
+			disabled: true,
+			provider: new FacebookAuthProvider()
 		}
 	];
 	onDestroy(() => ($store.showPassword = false));
@@ -57,7 +75,11 @@
 <Hr content="or" />
 
 {#each signInOptions as option}
-	<Button on:click={() => signin(option.provider)} styles={option.styles}>
+	<Button
+		disabled={option.disabled}
+		on:click={() => signin(option.provider)}
+		styles={option.styles}
+	>
 		<img src={option.icon} width="20" height="20" alt={option.alt} />
 		{option.info}
 	</Button>
