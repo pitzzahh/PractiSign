@@ -73,7 +73,6 @@
 		>
 			<Button
 				info="Retry"
-				showLoading={false}
 				styles="bg-green-500 hover:bg-green-600 text-white text-sm font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
 			/>
 		</a>
