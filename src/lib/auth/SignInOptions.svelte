@@ -52,7 +52,7 @@
 		},
 		{
 			styles:
-				'text-slate-100 bg-[#4285F4] hover:bg-[#4285F4]/90 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center flex items-center justify-center hover:scale-[1.03]',
+				'text-slate-100 bg-[#5D6274] hover:bg-[#5D6274]/90 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center flex items-center justify-center hover:scale-[1.03]',
 			info: 'Sign in with Google',
 			icon: googleIcon,
 			alt: 'Google icon',
