@@ -25,7 +25,7 @@
 	};
 
 	const handleSignUp = () => {
-		$store.isSigninIn = true;
+		$store.isAuthenticating = true;
 		createUserWithEmailAndPassword(auth, email, passwordContent)
 			.then((result: UserCredential) => {
 				let resultedUser = result.user;
@@ -63,13 +63,13 @@
 			})
 			.finally(() => {
 				buttonInfo.info = 'SignUp';
-				$store.isSigninIn = false;
+				$store.isAuthenticating = false;
 			});
 	};
 
 	onDestroy(() => {
 		$store.showPassword = false;
-		$store.isSigninIn = false;
+		$store.isAuthenticating = false;
 	});
 
 	$: errorMessage = '';

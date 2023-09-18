@@ -2,14 +2,14 @@
 	import { store } from '$lib';
 	export let styles: string;
 	export let info: string = '';
-	$: disabled = $store.isSigninIn || $store.isSigninIn;
+	$: disabled = $store.isAuthenticating || $store.isAuthenticating;
 </script>
 
 <button type="button" on:click|preventDefault {disabled} class={styles}>
 	<section
 		class="flex items-center justify-center gap-1.5 w-auto {disabled ? 'cursor-not-allowed' : ''}"
 	>
-		{#if $store.isSigninIn}
+		{#if $store.isAuthenticating}
 			<div role="status">
 				<svg
 					aria-hidden="true"

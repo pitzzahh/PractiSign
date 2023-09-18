@@ -26,7 +26,7 @@
 
 	const handleSignIn = async () => {
 		buttonInfo.info = 'Signing in';
-		$store.isSigninIn = true;
+		$store.isAuthenticating = true;
 		signInWithEmailAndPassword(auth, email, passwordContent)
 			.then((result: UserCredential) => {
 				if (result.user) {
@@ -39,7 +39,7 @@
 			})
 			.finally(() => {
 				buttonInfo.info = 'SignIn';
-				$store.isSigninIn = false;
+				$store.isAuthenticating = false;
 			});
 	};
 
