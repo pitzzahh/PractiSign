@@ -26,16 +26,12 @@ export const store = writable({
 });
 
 function userStore() {
-  let unsubscribe: (() => void) | null = null; // Initialize the unsubscribe function
+  let unsubscribe: (() => void) | null = null; 
 
   const store = writable<User | null>(null, (set) => {
-    unsubscribe = auth.onAuthStateChanged((user) => {
-      console.info('a new user has been set');
-      set(user);
-    });
+    unsubscribe = auth.onAuthStateChanged((user) => set(user));
   });
 
-  // Unsubscribe when the store is destroyed
   store.subscribe(() => {
     return () => {
       if (unsubscribe) {
@@ -49,5 +45,3 @@ function userStore() {
 }
 
 export const user = userStore();
-
-// Usage: Load function in your
