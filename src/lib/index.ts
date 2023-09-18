@@ -26,24 +26,28 @@ export const store = writable({
 });
 
 function userStore() {
-  let unsubscribe: () => void;
+  let unsubscribe: (() => void) | null = null; // Initialize the unsubscribe function
 
-  // if (!auth || !globalThis.window) {
-  //   console.warn('Auth is not initialized or not in the browser!')
-  //   const { subscribe } = writable<User | null>(null)
-  //   return { subscribe }
-  // }
-
-  const { subscribe } = writable<User | null>(auth?.currentUser ?? null, (set) => {
+  const store = writable<User | null>(null, (set) => {
     unsubscribe = auth.onAuthStateChanged((user) => {
-      console.info('a new user has been set')
-      set(user)
-    })
-
-    return () => unsubscribe();
+      console.info('a new user has been set');
+      set(user);
+    });
   });
 
-  return { subscribe }
+  // Unsubscribe when the store is destroyed
+  store.subscribe(() => {
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+        unsubscribe = null;
+      }
+    };
+  });
+
+  return store;
 }
 
-export const user = userStore()
+export const user = userStore();
+
+// Usage: Load function in your
