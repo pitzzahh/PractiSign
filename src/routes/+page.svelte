@@ -1,8 +1,10 @@
-<script>
-	import { auth } from '$lib';
+<script lang="ts">
+	import { auth, user } from '$lib';
 	import Hr from '$lib/components/HorizontalLine.svelte';
 	import { signOut } from 'firebase/auth';
-	import { fade } from 'svelte/transition';
+	import { quintOut } from 'svelte/easing';
+	import { fade, fly } from 'svelte/transition';
+	let domain: string = 'https://practi-sign.vercel.app'
 </script>
 
 <svelte:head>
@@ -17,7 +19,7 @@
 		content="sign-in application, registration app, secure authentication, user management, PractiSign"
 	/>
 	<meta name="robots" content="index, follow" />
-	<link rel="canonical" href="https://practi-sign.vercel.app/" />
+	<link rel="canonical" href="{domain}/" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta http-equiv="Content-Language" content="en" />
 	<meta name="format-detection" content="telephone=no" />
@@ -29,8 +31,8 @@
 		property="og:description"
 		content="Secure sign-in and registration application for PractiSign. Create an account, manage users, and enjoy smooth authentication."
 	/>
-	<meta property="og:image" content="https://practi-sign.vercel.app/favicon.png" />
-	<meta property="og:url" content="https://practi-sign.vercel.app/" />
+	<meta property="og:image" content="{domain}/favicon.png" />
+	<meta property="og:url" content="{domain}/" />
 	<meta property="og:type" content="website" />
 	<meta property="og:site_name" content="PractiSign" />
 	<meta name="twitter:card" content="summary_large_image" />
@@ -40,15 +42,26 @@
 		name="twitter:description"
 		content="Secure sign-in and registration application for PractiSign. Create an account, manage users, and enjoy smooth authentication."
 	/>
-	<meta name="twitter:image" content="https://practi-sign.vercel.app/favicon.png" />
+	<meta name="twitter:image" content="{domain}/favicon.png" />
 </svelte:head>
 
 <main in:fade class="bg-blue-500 h-screen flex justify-center items-center">
 	<div class="text-white text-center">
-		<p class="text-6xl font-bold mb-4">Welcome {auth.currentUser?.displayName}</p>
-		<p class="text-4xl">Discover amazing content and more!</p>
+		<p
+			transition:fly={{ delay: 250, duration: 300, x: -100, opacity: 0.5, easing: quintOut }}
+			class="text-6xl font-bold mb-4"
+		>
+			Welcome {$user?.displayName}
+		</p>
+		<p
+			transition:fly={{ delay: 450, duration: 300, y: 100, opacity: 0.5, easing: quintOut }}
+			class="text-4xl"
+		>
+			Discover amazing content and more!
+		</p>
 		<Hr content="options" />
 		<button
+			in:fade={{ delay: 650 }}
 			class="bg-danger-900 text-white py-2 px-4 rounded-md hover:bg-danger-500"
 			on:click={() =>
 				signOut(auth)
