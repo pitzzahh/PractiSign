@@ -4,7 +4,7 @@
 	import googleIcon from '$lib/assets/auth/google-icon.svg';
 	import { goto } from '$app/navigation';
 	import { store, auth } from '$lib';
-	import { GoogleAuthProvider, signInWithPopup, type UserCredential } from 'firebase/auth';
+	import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup, type UserCredential } from 'firebase/auth';
 	import { onDestroy } from 'svelte';
 	import Button from '$lib/components/Button.svelte';
 	import type { FirebaseError } from 'firebase/app';
@@ -15,13 +15,12 @@
 		$store.isSigninIn = false;
 	}
 
-	async function signInWithGoogle() {
+	async function signin(provider: any) {
 		$store.isSigninIn = true;
-		console.log('signin in with google');
-		const provider = new GoogleAuthProvider();
+		console.log(`Signing in using ${provider}`)
 		signInWithPopup(auth, provider)
 			.then((user: UserCredential) => {
-				console.info('signed in with boogle');
+				console.info(`signed in with ${provider}`);
 				if (user) {
 					goto('/');
 				}
@@ -41,15 +40,15 @@
 			info: 'Sign in with Github',
 			icon: githubIcon,
 			alt: 'GitHub icon',
-			handler: signInWithGithub
-		},
+			provider: new GithubAuthProvider()
+			},
 		{
 			styles:
 				'text-slate-100 bg-[#4285F4] hover:bg-[#4285F4]/90 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center flex items-center justify-center ',
 			info: 'Sign in with Google',
 			icon: googleIcon,
 			alt: 'Google icon',
-			handler: signInWithGoogle
+			provider: new GoogleAuthProvider()
 		}
 	];
 	onDestroy(() => ($store.showPassword = false));
@@ -58,7 +57,7 @@
 <Hr content="or" />
 
 {#each signInOptions as option}
-	<Button on:click={option.handler} styles={option.styles}>
+	<Button on:click={() => signin(option.provider)} styles={option.styles}>
 		<img src={option.icon} width="20" height="20" alt={option.alt} />
 		{option.info}
 	</Button>
