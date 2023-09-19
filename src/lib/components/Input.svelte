@@ -9,11 +9,6 @@
 
 	let inputType: 'password' | 'text' = 'text';
 
-	const togglePassword = () => {
-		$store.showPassword = !$store.showPassword;
-		console.log(`is toggled: ${$store.showPassword}`);
-	};
-
 	$: {
 		inputType = hasIcon && !$store.showPassword ? 'password' : 'text';
 	}
@@ -23,30 +18,17 @@
 
 <div class="relative">
 	{#if inputType === 'password'}
-		<input
-			on:keydown|stopPropagation
-			on:click|stopPropagation
-			required
-			type="password"
-			class={variants}
-			{name}
-			bind:value
-		/>
+		<input on:keydown|stopPropagation required type="password" class={variants} {name} bind:value />
 	{:else}
-		<input
-			on:keydown|stopPropagation
-			on:click|stopPropagation
-			required
-			type="text"
-			class={variants}
-			{name}
-			bind:value
-		/>
+		<input on:keydown|stopPropagation required type="text" class={variants} {name} bind:value />
 	{/if}
 
 	{#if hasIcon}
 		<button
-			on:click|preventDefault|stopPropagation={togglePassword}
+			type="button"
+			on:click={() => {
+				$store.showPassword = !$store.showPassword;
+			}}
 			class="absolute {$store.showPassword
 				? 'top-1/2'
 				: 'top-[60%]'} right-2 -translate-y-1/2 focus:outline-none"
