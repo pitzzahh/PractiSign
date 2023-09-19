@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { auth, user } from '$lib';
+	import { auth, store, user } from '$lib';
+	import Button from '$lib/components/Button.svelte';
 	import Hr from '$lib/components/HorizontalLine.svelte';
 	import { signOut } from 'firebase/auth';
 	import { quintOut } from 'svelte/easing';
 	import { fade, fly } from 'svelte/transition';
-	let domain: string = 'https://practi-sign.vercel.app'
+	let domain: string = 'https://practi-sign.vercel.app';
 </script>
 
 <svelte:head>
@@ -60,15 +61,17 @@
 			Discover amazing content and more!
 		</p>
 		<Hr content="options" />
-		<button
-			in:fade={{ delay: 650 }}
-			class="bg-danger-900 text-white py-2 px-4 rounded-md hover:bg-danger-500"
-			on:click={() =>
+		<Button
+			info="Sign out"
+			styles="bg-danger-900 text-white py-2 px-4 rounded-md hover:bg-danger-500"
+			on:click={() => {
+				$store.isProcessing = true;
+				console.info('signing out');
 				signOut(auth)
 					.then(() => location.reload())
-					.catch((error) => console.error(error))}
-		>
-			Sign Out
-		</button>
+					.catch((error) => console.error(error))
+					.finally(() => ($store.isProcessing = false));
+			}}
+		/>
 	</div>
 </main>
