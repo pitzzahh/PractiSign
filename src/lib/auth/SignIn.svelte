@@ -7,12 +7,10 @@
 	import Input from '$lib/components/Input.svelte';
 	import { auth, store } from '$lib';
 	import { goto } from '$app/navigation';
-	import {
-		signInWithEmailAndPassword,
-		type UserCredential
-	} from 'firebase/auth';
+	import { signInWithEmailAndPassword, type UserCredential } from 'firebase/auth';
 	import { onDestroy } from 'svelte';
 	import Hr from '$lib/components/HorizontalLine.svelte';
+	import type { FirebaseError } from 'firebase/app';
 
 	let passwordContent: string = '';
 	let email: string = '';
@@ -31,7 +29,7 @@
 					goto('/');
 				}
 			})
-			.catch((error) => {
+			.catch((error: FirebaseError) => {
 				errorMessage = error.code;
 				console.error(errorMessage);
 			})
@@ -64,18 +62,13 @@
 				<div>
 					<label for="email" class="sr-only">Email</label>
 					<p class="dark:text-slate-100 text-md font-bold mb-1">Email</p>
-					<Input
-						on:keydown={() => errorMessage = ''}
-						bind:value={email}
-						hasIcon={false}
-					/>
+					<Input on:keydown={() => (errorMessage = '')} bind:value={email} hasIcon={false} />
 				</div>
 				<div>
 					<label for="password" class="sr-only">Password</label>
 					<p class="dark:text-slate-100 text-md font-bold mb-1">Password</p>
 					<Input
 						on:keydown={(event) => {
-							event.stopImmediatePropagation()
 							if (event.key === 'Enter') {
 								handleSignIn();
 							}
