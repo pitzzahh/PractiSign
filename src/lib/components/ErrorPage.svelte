@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import Button from './Button.svelte';
 	export let info: string;
@@ -72,6 +73,10 @@
 			class="hover:bg-green-five hover:text-steel-one rounded-full transition-all duration-500 ease-in-out"
 		>
 			<Button
+				on:click={() => {
+					goto('/');
+					location.reload();
+				}}
 				info="Retry"
 				styles="bg-green-500 hover:bg-green-600 text-white text-sm font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
 			/>
