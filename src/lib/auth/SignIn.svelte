@@ -8,7 +8,6 @@
 	import { auth, store } from '$lib';
 	import { goto } from '$app/navigation';
 	import {
-		GoogleAuthProvider,
 		signInWithEmailAndPassword,
 		type UserCredential
 	} from 'firebase/auth';
@@ -17,16 +16,15 @@
 
 	let passwordContent: string = '';
 	let email: string = '';
+	let errorMessage: string = '';
 
-	$: errorMessage = '';
-
-	const buttonInfo = {
+	const btn = {
 		info: 'SignIn'
 	};
 
 	const handleSignIn = async () => {
-		buttonInfo.info = 'Signing in';
-		$store.isAuthenticating = true;
+		btn.info = 'Signing in';
+		$store.isProcessing = true;
 		signInWithEmailAndPassword(auth, email, passwordContent)
 			.then((result: UserCredential) => {
 				if (result.user) {
@@ -38,8 +36,8 @@
 				console.error(errorMessage);
 			})
 			.finally(() => {
-				buttonInfo.info = 'SignIn';
-				$store.isAuthenticating = false;
+				btn.info = 'SignIn';
+				$store.isProcessing = false;
 			});
 	};
 
@@ -66,13 +64,18 @@
 				<div>
 					<label for="email" class="sr-only">Email</label>
 					<p class="dark:text-slate-100 text-md font-bold mb-1">Email</p>
-					<Input on:keydown={() => (errorMessage = '')} bind:value={email} hasIcon={false} />
+					<Input
+						on:keydown={() => errorMessage = ''}
+						bind:value={email}
+						hasIcon={false}
+					/>
 				</div>
 				<div>
 					<label for="password" class="sr-only">Password</label>
 					<p class="dark:text-slate-100 text-md font-bold mb-1">Password</p>
 					<Input
 						on:keydown={(event) => {
+							event.stopImmediatePropagation()
 							if (event.key === 'Enter') {
 								handleSignIn();
 							}
@@ -83,7 +86,7 @@
 					/>
 				</div>
 				<Button
-					info={buttonInfo.info}
+					info={btn.info}
 					on:click={handleSignIn}
 					styles="text-slate-100 bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-300 font-medium rounded-lg text-md px-5 py-2.5 
               dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
