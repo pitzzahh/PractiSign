@@ -17,14 +17,14 @@
 	import type { FirebaseError } from 'firebase/app';
 
 	function signInWithGithub() {
-		$store.isAuthenticating = true;
+		$store.isProcessing = true;
 		console.log('signin in with github');
-		$store.isAuthenticating = false;
+		$store.isProcessing = false;
 	}
 
 	async function signin(provider: any) {
-		$store.isAuthenticating = true;
-		console.log(`Signing in using ${provider}`);
+		$store.isProcessing = true;
+		console.info(`Signing in using ${provider.providerId}`);
 		signInWithPopup(auth, provider)
 			.then((user: UserCredential) => {
 				console.info(`signed in with ${provider}`);
@@ -37,7 +37,7 @@
 				const errorMessage = error.message;
 				console.error(errorCode, errorMessage);
 			})
-			.finally(() => ($store.isAuthenticating = false));
+			.finally(() => ($store.isProcessing = false));
 	}
 
 	const signInOptions = [
