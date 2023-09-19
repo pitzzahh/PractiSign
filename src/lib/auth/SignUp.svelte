@@ -25,7 +25,7 @@
 	};
 
 	const handleSignUp = () => {
-		$store.isAuthenticating = true;
+		$store.isProcessing = true;
 		createUserWithEmailAndPassword(auth, email, passwordContent)
 			.then((result: UserCredential) => {
 				let resultedUser = result.user;
@@ -63,13 +63,13 @@
 			})
 			.finally(() => {
 				buttonInfo.info = 'SignUp';
-				$store.isAuthenticating = false;
+				$store.isProcessing = false;
 			});
 	};
 
 	onDestroy(() => {
 		$store.showPassword = false;
-		$store.isAuthenticating = false;
+		$store.isProcessing = false;
 	});
 
 	$: errorMessage = '';
@@ -117,7 +117,12 @@
 					<label for="password" class="sr-only">Password</label>
 					<p class="dark:text-slate-100 text-md font-bold mb-1">Password</p>
 					<Input
-						on:keydown={() => (errorMessage = '')}
+						on:keydown={(event) => {
+							if (event.key === 'Enter') {
+								handleSignUp();
+							}
+							errorMessage = '';
+						}}
 						bind:value={passwordContent}
 						name={'password'}
 						hasIcon={true}
