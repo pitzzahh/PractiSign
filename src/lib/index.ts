@@ -13,18 +13,6 @@ const firebaseConfig = {
   appId: "1:614639788222:web:49fd13d45575611bf4feef"
 };
 
-// Initialize Firebase
-export const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-export const storage = getStorage(app);
-
-export const store = writable({
-  loggedIn: false,
-  isAuthenticating: false,
-  showPassword: false
-});
-
 function userStore() {
   let unsubscribe: (() => void) | null = null; 
 
@@ -43,4 +31,14 @@ function userStore() {
   return store;
 }
 
+// Initialize Firebase
+export const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+export const storage = getStorage(app);
 export const user = userStore();
+export const store = writable({
+  loggedIn: false,
+  isProcessing: false,
+  showPassword: false
+});
